@@ -35,3 +35,11 @@ out/
 
 ### VS Code ###
 .vscode/
+
+/node_modules/
+.env
+application-local.properties
+
+.DS_Store
+Thumbs.db
+*.log
