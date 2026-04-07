@@ -120,6 +120,26 @@ CREATE TABLE device_error_log (
     CONSTRAINT fk_device_error_device FOREIGN KEY (device_id) REFERENCES device(id)
 ) COMMENT='장치 오류 로그 테이블';
 
+-- [8] admin (관리자 계정 테이블)
+CREATE TABLE admin (
+                       id           BIGINT       NOT NULL AUTO_INCREMENT,
+                       username     VARCHAR(50)  NOT NULL UNIQUE     COMMENT '로그인 아이디',
+                       password     VARCHAR(255) NOT NULL             COMMENT '비밀번호 (BCrypt 암호화)',
+                       name         VARCHAR(100)                      COMMENT '관리자 이름',
+                       role         VARCHAR(20)  NOT NULL DEFAULT 'ADMIN'
+                           COMMENT 'ADMIN / SUPER_ADMIN',
+                       is_active    BOOLEAN      NOT NULL DEFAULT TRUE COMMENT '계정 활성화 여부',
+                       last_login_at DATETIME             DEFAULT NULL COMMENT '마지막 로그인 시간',
+                       created_at   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                       updated_at   DATETIME              DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+                       PRIMARY KEY (id)
+) COMMENT='관리자 계정 테이블';
+
+-- 기본 관리자 계정 (비밀번호: admin1234 → BCrypt)
+INSERT INTO admin (username, password, name, role) VALUES
+    ('admin', '$2a$10$7QJ9Z1Z1Z1Z1Z1Z1Z1Z1ZuKQJ9Z1Z1Z1Z1Z1Z1Z1Z1Z1Z1Z1Z1', '관리자', 'SUPER_ADMIN');
+
+
 -- =============================================
 -- 기본 데이터 (trash_type)
 -- =============================================
