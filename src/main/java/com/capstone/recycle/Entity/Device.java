@@ -1,37 +1,33 @@
-package com.capstone.recycle.entities;
+package com.capstone.recycle.Entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "bin")
+@Table(name = "device")
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Bin {
+public class Device {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "device_id", nullable = false)
-    private Device device;
+    @Column(name = "device_code", nullable = false, unique = true, length = 50)
+    private String deviceCode;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "trash_type_id", nullable = false)
-    private TrashType trashType;
+    @Column(name = "device_name", length = 100)
+    private String deviceName;
 
-    @Column(name = "bin_code", nullable = false, unique = true, length = 50)
-    private String binCode;
+    @Column(name = "location")
+    private String location;
 
-    @Column(name = "bin_name", length = 100)
-    private String binName;
-
-    @Column(name = "capacity")
-    private Integer capacity;
+    @Column(name = "status", nullable = false, length = 20)
+    @Builder.Default
+    private String status = "OFFLINE"; // ONLINE / OFFLINE / ERROR
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

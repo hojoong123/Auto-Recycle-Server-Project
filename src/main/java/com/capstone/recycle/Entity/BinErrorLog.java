@@ -1,24 +1,24 @@
-package com.capstone.recycle.entities;
+package com.capstone.recycle.Entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "device_error_log")
+@Table(name = "bin_error_log")
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DeviceErrorLog {
+public class BinErrorLog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "device_id", nullable = false)
-    private Device device;
+    @JoinColumn(name = "bin_id", nullable = false)
+    private Bin bin;
 
     @Column(name = "error_type", nullable = false, length = 50)
     private String errorType;
