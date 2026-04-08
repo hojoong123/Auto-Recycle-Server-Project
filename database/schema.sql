@@ -148,3 +148,35 @@ INSERT INTO trash_type (type_code, type_name, description, recyclable) VALUES
 ('CAN',     '캔',      '음료캔, 금속캔 등',         TRUE),
 ('GLASS',   '유리',    '유리병, 유리용기 등',        TRUE),
 ('GENERAL', '일반쓰레기', '재활용 불가 쓰레기',      FALSE);
+
+
+-- =============================================
+-- 추가 데이터 (admin, device, bin, bin_status)
+-- =============================================
+UPDATE auto_recycle_db.admin
+SET password = '$2b$10$N53PfUm1erhCc5LI/RcGe.CYIGj99yTfCB.Ka3NzhNpsl7/9IDT0m'
+WHERE username = 'admin';
+
+USE auto_recycle_db;
+
+-- device 더미 데이터
+INSERT INTO device (device_code, device_name, location, status) VALUES
+('DEVICE_001', '1호기', '1층 로비', 'ONLINE'),
+('DEVICE_002', '2호기', '2층 복도', 'OFFLINE');
+
+-- bin 더미 데이터
+INSERT INTO bin (device_id, trash_type_id, bin_code, bin_name, capacity) VALUES
+(1, 1, 'BIN_001_PLASTIC', '1호기 플라스틱통', 100),
+(1, 2, 'BIN_001_CAN',     '1호기 캔통',       100),
+(1, 3, 'BIN_001_GLASS',   '1호기 유리통',     100),
+(1, 4, 'BIN_001_GENERAL', '1호기 일반쓰레기통', 100),
+(2, 1, 'BIN_002_PLASTIC', '2호기 플라스틱통', 100);
+
+-- bin_status 더미 데이터
+INSERT INTO bin_status (bin_id, fill_percent, is_full, error_flag) VALUES
+(1, 65, false, false),
+(2, 30, false, false),
+(3, 90, false, false),
+(4, 10, false, false),
+(5, 0,  false, false);
+
