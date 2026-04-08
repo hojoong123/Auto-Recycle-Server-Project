@@ -1,16 +1,16 @@
-package com.capstone.recycle.entities;
+package com.capstone.recycle.Entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "trash_event")
+@Table(name = "bin")
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TrashEvent {
+public class Bin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,35 +21,31 @@ public class TrashEvent {
     private Device device;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bin_id", nullable = false)
-    private Bin bin;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "trash_type_id", nullable = false)
     private TrashType trashType;
 
-    @Column(name = "is_defective", nullable = false)
-    @Builder.Default
-    private Boolean isDefective = false;
+    @Column(name = "bin_code", nullable = false, unique = true, length = 50)
+    private String binCode;
 
-    @Column(name = "status", nullable = false, length = 20)
-    @Builder.Default
-    private String status = "PENDING"; // PENDING / PROCESSED / ERROR
+    @Column(name = "bin_name", length = 100)
+    private String binName;
 
-    @Column(name = "defect_reason")
-    private String defectReason;
-
-    @Column(name = "confidence")
-    private Double confidence;
-
-    @Column(name = "image_url", columnDefinition = "TEXT")
-    private String imageUrl;
+    @Column(name = "capacity")
+    private Integer capacity;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
     }
 }
