@@ -1,8 +1,8 @@
-package com.capstone.recycle.Controller;
+package com.capstone.recycle.controller;
 
-import com.capstone.recycle.DTO.request.LoginRequest;
-import com.capstone.recycle.DTO.response.LoginResponse;
-import com.capstone.recycle.Service.AdminService;
+import com.capstone.recycle.dto.request.LoginRequest;
+import com.capstone.recycle.dto.response.LoginResponse;
+import com.capstone.recycle.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

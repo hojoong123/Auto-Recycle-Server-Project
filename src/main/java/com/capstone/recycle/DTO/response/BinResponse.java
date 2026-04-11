@@ -1,7 +1,7 @@
-package com.capstone.recycle.DTO.response;
+package com.capstone.recycle.dto.response;
 
-import com.capstone.recycle.Entity.Bin;
-import com.capstone.recycle.Entity.BinStatus;
+import com.capstone.recycle.entity.Bin;
+import com.capstone.recycle.entity.BinStatus;
 import lombok.Getter;
 
 @Getter

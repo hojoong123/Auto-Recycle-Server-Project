@@ -1,7 +1,7 @@
-package com.capstone.recycle.DTO.response;
+package com.capstone.recycle.dto.response;
 
-import com.capstone.recycle.Entity.BinErrorLog;
-import com.capstone.recycle.Entity.DeviceErrorLog;
+import com.capstone.recycle.entity.BinErrorLog;
+import com.capstone.recycle.entity.DeviceErrorLog;
 import lombok.Getter;
 import java.time.LocalDateTime;
 

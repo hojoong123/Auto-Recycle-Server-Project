@@ -1,7 +1,7 @@
-package com.capstone.recycle.Security;
+package com.capstone.recycle.security;
 
-import com.capstone.recycle.Entity.Admin;
-import com.capstone.recycle.Repository.AdminRepository;
+import com.capstone.recycle.entity.Admin;
+import com.capstone.recycle.repository.AdminRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;

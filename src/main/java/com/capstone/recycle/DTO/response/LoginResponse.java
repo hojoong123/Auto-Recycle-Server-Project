@@ -1,4 +1,4 @@
-package com.capstone.recycle.DTO.response;
+package com.capstone.recycle.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,8 +1,8 @@
-package com.capstone.recycle.Controller;
+package com.capstone.recycle.controller;
 
-import com.capstone.recycle.DTO.request.TrashEventRequest;
-import com.capstone.recycle.DTO.response.TrashEventResponse;
-import com.capstone.recycle.Service.TrashEventService;
+import com.capstone.recycle.dto.request.TrashEventRequest;
+import com.capstone.recycle.dto.response.TrashEventResponse;
+import com.capstone.recycle.service.TrashEventService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,10 +1,10 @@
-package com.capstone.recycle.Service;
+package com.capstone.recycle.service;
 
-import com.capstone.recycle.DTO.request.LoginRequest;
-import com.capstone.recycle.DTO.response.LoginResponse;
-import com.capstone.recycle.Entity.Admin;
-import com.capstone.recycle.Repository.AdminRepository;
-import com.capstone.recycle.Security.JwtUtil;
+import com.capstone.recycle.dto.request.LoginRequest;
+import com.capstone.recycle.dto.response.LoginResponse;
+import com.capstone.recycle.entity.Admin;
+import com.capstone.recycle.repository.AdminRepository;
+import com.capstone.recycle.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

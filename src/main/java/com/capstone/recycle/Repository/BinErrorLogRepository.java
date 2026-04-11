@@ -1,6 +1,6 @@
-package com.capstone.recycle.Repository;
+package com.capstone.recycle.repository;
 
-import com.capstone.recycle.Entity.BinErrorLog;
+import com.capstone.recycle.entity.BinErrorLog;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;

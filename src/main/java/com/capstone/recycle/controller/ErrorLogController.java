@@ -1,7 +1,7 @@
-package com.capstone.recycle.Controller;
+package com.capstone.recycle.controller;
 
-import com.capstone.recycle.DTO.response.ErrorLogResponse;
-import com.capstone.recycle.Service.ErrorLogService;
+import com.capstone.recycle.dto.response.ErrorLogResponse;
+import com.capstone.recycle.service.ErrorLogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,4 +1,4 @@
-package com.capstone.recycle.Security;
+package com.capstone.recycle.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

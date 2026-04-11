@@ -1,6 +1,6 @@
-package com.capstone.recycle.Repository;
+package com.capstone.recycle.repository;
 
-import com.capstone.recycle.Entity.DeviceErrorLog;
+import com.capstone.recycle.entity.DeviceErrorLog;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;

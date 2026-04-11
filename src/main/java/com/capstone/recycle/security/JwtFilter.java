@@ -1,4 +1,4 @@
-package com.capstone.recycle.Security;
+package com.capstone.recycle.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

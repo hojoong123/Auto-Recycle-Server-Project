@@ -1,7 +1,7 @@
-package com.capstone.recycle.Controller;
+package com.capstone.recycle.controller;
 
-import com.capstone.recycle.DTO.response.DeviceResponse;
-import com.capstone.recycle.Service.DeviceService;
+import com.capstone.recycle.dto.response.DeviceResponse;
+import com.capstone.recycle.service.DeviceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
