@@ -172,6 +172,12 @@ INSERT INTO bin (device_id, trash_type_id, bin_code, bin_name, capacity) VALUES
 (1, 4, 'BIN_001_GENERAL', '1호기 일반쓰레기통', 100),
 (2, 1, 'BIN_002_PLASTIC', '2호기 플라스틱통', 100);
 
+INSERT INTO bin (device_id, trash_type_id, bin_code, bin_name, capacity) VALUES
+(2, 2, 'BIN_002_CAN', 	  '2호기 캔통', 	  100),
+(2, 3, 'BIN_002_GLASS',   '2호기 유리통',    100),
+(2, 4, 'BIN_002_GENERAL', '2호기 일반쓰레기통', 100);
+
+
 -- bin_status 더미 데이터
 INSERT INTO bin_status (bin_id, fill_percent, is_full, error_flag) VALUES
 (1, 65, false, false),
