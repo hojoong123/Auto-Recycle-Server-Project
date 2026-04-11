@@ -1,9 +1,9 @@
-package com.capstone.recycle.Service;
+package com.capstone.recycle.service;
 
-import com.capstone.recycle.DTO.response.BinResponse;
-import com.capstone.recycle.Entity.BinStatus;
-import com.capstone.recycle.Repository.BinRepository;
-import com.capstone.recycle.Repository.BinStatusRepository;
+import com.capstone.recycle.dto.response.BinResponse;
+import com.capstone.recycle.entity.BinStatus;
+import com.capstone.recycle.repository.BinRepository;
+import com.capstone.recycle.repository.BinStatusRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;

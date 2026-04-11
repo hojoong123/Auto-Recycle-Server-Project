@@ -1,9 +1,9 @@
-package com.capstone.recycle.Service;
+package com.capstone.recycle.service;
 
-import com.capstone.recycle.DTO.request.TrashEventRequest;
-import com.capstone.recycle.DTO.response.TrashEventResponse;
-import com.capstone.recycle.Entity.*;
-import com.capstone.recycle.Repository.*;
+import com.capstone.recycle.dto.request.TrashEventRequest;
+import com.capstone.recycle.dto.response.TrashEventResponse;
+import com.capstone.recycle.entity.*;
+import com.capstone.recycle.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;

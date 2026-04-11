@@ -1,10 +1,10 @@
-package com.capstone.recycle.Service;
+package com.capstone.recycle.service;
 
-import com.capstone.recycle.DTO.response.ErrorLogResponse;
-import com.capstone.recycle.Entity.BinErrorLog;
-import com.capstone.recycle.Entity.DeviceErrorLog;
-import com.capstone.recycle.Repository.BinErrorLogRepository;
-import com.capstone.recycle.Repository.DeviceErrorLogRepository;
+import com.capstone.recycle.dto.response.ErrorLogResponse;
+import com.capstone.recycle.entity.BinErrorLog;
+import com.capstone.recycle.entity.DeviceErrorLog;
+import com.capstone.recycle.repository.BinErrorLogRepository;
+import com.capstone.recycle.repository.DeviceErrorLogRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;

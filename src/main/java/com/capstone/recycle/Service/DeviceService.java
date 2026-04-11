@@ -1,7 +1,7 @@
-package com.capstone.recycle.Service;
+package com.capstone.recycle.service;
 
-import com.capstone.recycle.DTO.response.DeviceResponse;
-import com.capstone.recycle.Repository.DeviceRepository;
+import com.capstone.recycle.dto.response.DeviceResponse;
+import com.capstone.recycle.repository.DeviceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
