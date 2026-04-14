@@ -1,6 +1,6 @@
-package com.capstone.recycle.dto.response;
+package com.capstone.recycle.DTO.response;
 
-import com.capstone.recycle.entity.Device;
+import com.capstone.recycle.Entity.Device;
 import lombok.Getter;
 import java.time.LocalDateTime;
 

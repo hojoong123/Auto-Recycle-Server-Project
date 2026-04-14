@@ -31,6 +31,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/auth/**").permitAll()  // 로그인은 누구나
                 .requestMatchers("/api/events").permitAll()   // 라즈베리파이 전용
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                    .requestMatchers("/ws/**").permitAll()
                 .anyRequest().authenticated()                 // 나머지는 관리자만
             )
             .addFilterBefore(new JwtFilter(jwtUtil, detailsService),

@@ -1,4 +1,4 @@
-package com.capstone.recycle.entity;
+package com.capstone.recycle.Entity;
 
 import jakarta.persistence.*;
 import lombok.*;

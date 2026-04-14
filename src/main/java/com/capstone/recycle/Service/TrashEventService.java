@@ -1,11 +1,14 @@
-package com.capstone.recycle.service;
+package com.capstone.recycle.Service;
 
-import com.capstone.recycle.dto.request.TrashEventRequest;
-import com.capstone.recycle.dto.response.TrashEventResponse;
-import com.capstone.recycle.entity.*;
-import com.capstone.recycle.repository.*;
+import com.capstone.recycle.DTO.request.TrashEventRequest;
+import com.capstone.recycle.DTO.response.ErrorLogResponse;
+import com.capstone.recycle.DTO.response.TrashEventResponse;
+import com.capstone.recycle.Entity.*;
+import com.capstone.recycle.Repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,8 +21,10 @@ public class TrashEventService {
     private final BinRepository binRepository;
     private final TrashTypeRepository trashTypeRepository;
     private final BinStatusRepository binStatusRepository;
+    private final BinErrorLogRepository binErrorLogRepository;
+    private final WebSocketService webSocketService;
 
-    // 라즈베리파이에서 이벤트 수신
+    @Transactional
     public void receiveEvent(TrashEventRequest request) {
         Device device = deviceRepository.findByDeviceCode(request.getDeviceCode())
                 .orElseThrow(() -> new IllegalArgumentException("장치를 찾을 수 없습니다: " + request.getDeviceCode()));
@@ -43,6 +48,10 @@ public class TrashEventService {
                 .build();
         trashEventRepository.save(event);
 
+        // ✅ 분류 이벤트 실시간 브로드캐스트
+        TrashEventResponse trashEventResponse = new TrashEventResponse(event);
+        webSocketService.broadcastTrashEvent(trashEventResponse);
+
         // 통 적재량 업데이트
         if (request.getFillPercent() != null) {
             BinStatus status = binStatusRepository.findByBinId(bin.getId()).orElse(null);
@@ -50,6 +59,23 @@ public class TrashEventService {
                 status.setFillPercent(request.getFillPercent());
                 status.setIsFull(request.getFillPercent() >= 100);
                 binStatusRepository.save(status);
+
+                // ✅ 적재량 변경 실시간 브로드캐스트
+                webSocketService.broadcastBinStatus(device.getId(), status);
+
+                // ✅ 적재량 80% 이상이면 경고 로그 + 실시간 알림
+                if (request.getFillPercent() >= 80) {
+                    BinErrorLog errorLog = BinErrorLog.builder()
+                            .bin(bin)
+                            .errorType("CAPACITY_WARNING")
+                            .message(bin.getBinCode() + " 적재량 "
+                                    + request.getFillPercent() + "% - 수거 필요")
+                            .resolved(false)
+                            .build();
+                    binErrorLogRepository.save(errorLog);
+
+                    webSocketService.broadcastError(new ErrorLogResponse(errorLog));
+                }
             }
         }
     }

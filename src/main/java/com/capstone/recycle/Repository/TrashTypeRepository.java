@@ -1,6 +1,6 @@
-package com.capstone.recycle.repository;
+package com.capstone.recycle.Repository;
 
-import com.capstone.recycle.entity.TrashType;
+import com.capstone.recycle.Entity.TrashType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;
