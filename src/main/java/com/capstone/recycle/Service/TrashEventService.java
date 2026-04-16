@@ -50,7 +50,7 @@ public class TrashEventService {
 
         // ✅ 분류 이벤트 실시간 브로드캐스트
         TrashEventResponse trashEventResponse = new TrashEventResponse(event);
-        webSocketService.broadcastTrashEvent(trashEventResponse);
+        //webSocketService.broadcastTrashEvent(trashEventResponse);
 
         // 통 적재량 업데이트
         if (request.getFillPercent() != null) {
@@ -61,7 +61,7 @@ public class TrashEventService {
                 binStatusRepository.save(status);
 
                 // ✅ 적재량 변경 실시간 브로드캐스트
-                webSocketService.broadcastBinStatus(device.getId(), status);
+                //webSocketService.broadcastBinStatus(device.getId(), status);
 
                 // ✅ 적재량 80% 이상이면 경고 로그 + 실시간 알림
                 if (request.getFillPercent() >= 80) {
@@ -74,7 +74,7 @@ public class TrashEventService {
                             .build();
                     binErrorLogRepository.save(errorLog);
 
-                    webSocketService.broadcastError(new ErrorLogResponse(errorLog));
+                    //webSocketService.broadcastError(new ErrorLogResponse(errorLog));
                 }
             }
         }
@@ -91,5 +91,9 @@ public class TrashEventService {
         return trashEventRepository.findById(id)
                 .map(TrashEventResponse::new)
                 .orElseThrow(() -> new IllegalArgumentException("이벤트를 찾을 수 없습니다."));
+    }
+
+    public void delete(Long id) {
+        trashEventRepository.deleteById(id);
     }
 }

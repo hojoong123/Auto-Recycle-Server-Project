@@ -33,4 +33,10 @@ public class TrashEventController {
     public ResponseEntity<TrashEventResponse> getEvent(@PathVariable Long id) {
         return ResponseEntity.ok(trashEventService.getEvent(id));
     }
+
+    @DeleteMapping("/events/{id}")
+    public ResponseEntity<?> deleteEvent(@PathVariable Long id) {
+        trashEventService.delete(id);
+        return ResponseEntity.ok().body("삭제 완료");
+    }
 }
