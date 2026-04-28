@@ -235,6 +235,12 @@ CREATE TABLE inspection_notification (
                                              FOREIGN KEY (receiver_admin_id) REFERENCES admin(id)
 ) COMMENT='점검 완료 알림 및 관리자 커뮤니케이션 테이블';
 
+SET @can_id      = (SELECT id FROM trash_type WHERE type_code = 'CAN');
+SET @glass_id    = (SELECT id FROM trash_type WHERE type_code = 'GLASS');
+SET @general_id  = (SELECT id FROM trash_type WHERE type_code = 'GENERAL');
+SET @beverage_id = (SELECT id FROM trash_type WHERE type_code = 'BEVERAGE');
+
+
 INSERT INTO bin (id, device_id, trash_type_id, bin_code, bin_name, capacity)
 VALUES
     (9, 1, @beverage_id, 'BIN_001_BEVERAGE', '1호기 음료통', 100),
