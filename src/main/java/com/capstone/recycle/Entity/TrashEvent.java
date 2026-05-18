@@ -36,6 +36,10 @@ public class TrashEvent {
     @Builder.Default
     private String status = "PENDING"; // PENDING / PROCESSED / ERROR
 
+    @Column(name = "event_type", nullable = false, length = 20)
+    @Builder.Default
+    private String eventType = "CLASSIFY"; // CLASSIFY / RESET
+
     @Column(name = "defect_reason")
     private String defectReason;
 

@@ -17,6 +17,8 @@ public class TrashEventResponse {
     private Double confidence;
     private String imageUrl;
     private LocalDateTime createdAt;
+    private String eventType;
+    private Long deviceId;
 
     public TrashEventResponse(TrashEvent event) {
         this.id = event.getId();
@@ -30,5 +32,7 @@ public class TrashEventResponse {
         this.confidence = event.getConfidence();
         this.imageUrl = event.getImageUrl();
         this.createdAt = event.getCreatedAt();
+        this.eventType = event.getEventType();
+        this.deviceId = event.getDevice().getId();
     }
 }

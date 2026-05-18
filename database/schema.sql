@@ -261,3 +261,7 @@ VALUES
     ('floor1', '$2b$10$N53PfUm1erhCc5LI/RcGe.CYIGj99yTfCB.Ka3NzhNpsl7/9IDT0m', '1층 관리자', 'ADMIN'),
     ('floor2', '$2b$10$N53PfUm1erhCc5LI/RcGe.CYIGj99yTfCB.Ka3NzhNpsl7/9IDT0m', '2층 관리자', 'ADMIN');
 
+ALTER TABLE trash_event
+    ADD COLUMN event_type VARCHAR(20) NOT NULL DEFAULT 'CLASSIFY'
+    COMMENT 'CLASSIFY / RESET' AFTER trash_type_id;
+
