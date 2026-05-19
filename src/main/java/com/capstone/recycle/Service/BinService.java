@@ -1,6 +1,7 @@
 package com.capstone.recycle.Service;
 
 import com.capstone.recycle.DTO.response.BinResponse;
+import com.capstone.recycle.DTO.response.BinStatusResponse;
 import com.capstone.recycle.Entity.Admin;
 import com.capstone.recycle.Entity.Bin;
 import com.capstone.recycle.Entity.BinStatus;
@@ -81,5 +82,12 @@ public class BinService {
         } catch (Exception e) {
             return null;
         }
+    }
+    public BinStatusResponse getBinStatus(Long binId) {
+
+        BinStatus status = binStatusRepository.findByBinId(binId)
+                .orElseThrow(() -> new IllegalArgumentException("통 상태를 찾을 수 없습니다."));
+
+        return new BinStatusResponse(status);
     }
 }

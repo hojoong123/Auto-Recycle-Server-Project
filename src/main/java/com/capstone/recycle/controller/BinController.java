@@ -1,6 +1,7 @@
 package com.capstone.recycle.controller;
 
 import com.capstone.recycle.DTO.response.BinResponse;
+import com.capstone.recycle.DTO.response.BinStatusResponse;
 import com.capstone.recycle.Service.BinService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,5 +26,11 @@ public class BinController {
                                          @RequestHeader(value = "Authorization", required = false) String authHeader) {
         binService.resetBin(id, authHeader);
         return ResponseEntity.ok().build();
+    }
+
+    // 현재 통 상태 조회
+    @GetMapping("/status/{binId}")
+    public ResponseEntity<BinStatusResponse> getBinStatus(@PathVariable Long binId) {
+        return ResponseEntity.ok(binService.getBinStatus(binId));
     }
 }
