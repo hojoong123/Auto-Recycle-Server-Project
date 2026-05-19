@@ -1,12 +1,15 @@
 package com.capstone.recycle.Service;
 
 import com.capstone.recycle.DTO.response.BinResponse;
+import com.capstone.recycle.Entity.Admin;
 import com.capstone.recycle.Entity.Bin;
 import com.capstone.recycle.Entity.BinStatus;
 import com.capstone.recycle.Entity.TrashEvent;
+import com.capstone.recycle.Repository.AdminRepository;
 import com.capstone.recycle.Repository.BinRepository;
 import com.capstone.recycle.Repository.BinStatusRepository;
 import com.capstone.recycle.Repository.TrashEventRepository;
+import com.capstone.recycle.security.JwtUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,8 @@ public class BinService {
     private final BinStatusRepository binStatusRepository;
     private final WebSocketService webSocketService;
     private final TrashEventRepository trashEventRepository;
+    private final AdminRepository adminRepository;
+    private final JwtUtil jwtUtil;
 
     public List<BinResponse> getBinsByDevice(Long deviceId) {
         return binRepository.findByDeviceId(deviceId)
@@ -34,26 +39,29 @@ public class BinService {
     }
 
     @Transactional
-    public void resetBin(Long binId) {
+    public void resetBin(Long binId, String authHeader) {
         BinStatus status = binStatusRepository.findByBinId(binId)
                 .orElseThrow(() -> new IllegalArgumentException("통 상태를 찾을 수 없습니다."));
+
+        int oldPercent = status.getFillPercent() != null ? status.getFillPercent() : 0;
+
         status.setFillPercent(0);
         status.setIsFull(false);
         status.setErrorFlag(false);
         status.setLastCollectedAt(LocalDateTime.now());
         binStatusRepository.save(status);
 
-        // ✅ 리셋 후 실시간 브로드캐스트
         Bin bin = binRepository.findById(binId)
                 .orElseThrow(() -> new IllegalArgumentException("통을 찾을 수 없습니다."));
 
-        // 👇 분류 기록(trash_event)에 RESET 이벤트 INSERT
-        String oldPercent = "";
+        Admin admin = resolveAdmin(authHeader);
+
         TrashEvent resetEvent = TrashEvent.builder()
                 .device(bin.getDevice())
                 .bin(bin)
                 .trashType(bin.getTrashType())
                 .eventType("RESET")
+                .performedBy(admin)
                 .status("PROCESSED")
                 .isDefective(false)
                 .defectReason("통 비우기 (이전 적재량 " + oldPercent + "%)")
@@ -62,5 +70,16 @@ public class BinService {
 
         BinResponse binResponse = new BinResponse(bin, status);
         webSocketService.broadcastBinStatus(bin.getDevice().getId(), binResponse);
+    }
+
+    private Admin resolveAdmin(String authHeader) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) return null;
+        try {
+            String token = authHeader.substring(7);
+            String username = jwtUtil.getUsernameFromToken(token);
+            return adminRepository.findByUsername(username).orElse(null);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

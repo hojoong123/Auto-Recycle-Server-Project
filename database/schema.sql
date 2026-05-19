@@ -265,3 +265,8 @@ ALTER TABLE trash_event
     ADD COLUMN event_type VARCHAR(20) NOT NULL DEFAULT 'CLASSIFY'
     COMMENT 'CLASSIFY / RESET' AFTER trash_type_id;
 
+ALTER TABLE trash_event
+    ADD COLUMN performed_by_admin_id BIGINT DEFAULT NULL
+    COMMENT '작업 수행 관리자' AFTER event_type,
+  ADD CONSTRAINT fk_event_admin FOREIGN KEY (performed_by_admin_id) REFERENCES admin(id);
+

@@ -14,16 +14,16 @@ public class BinController {
 
     private final BinService binService;
 
-    // GET /api/bins/{deviceId}
     @GetMapping("/{deviceId}")
     public ResponseEntity<List<BinResponse>> getBinsByDevice(@PathVariable Long deviceId) {
         return ResponseEntity.ok(binService.getBinsByDevice(deviceId));
     }
 
-    // POST /api/bins/{id}/reset
+    // 👇 Authorization 헤더에서 토큰 받아서 서비스로 넘김
     @PostMapping("/{id}/reset")
-    public ResponseEntity<Void> resetBin(@PathVariable Long id) {
-        binService.resetBin(id);
+    public ResponseEntity<Void> resetBin(@PathVariable Long id,
+                                         @RequestHeader(value = "Authorization", required = false) String authHeader) {
+        binService.resetBin(id, authHeader);
         return ResponseEntity.ok().build();
     }
 }

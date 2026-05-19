@@ -14,13 +14,12 @@ public class JwtUtil {
     private String secret;
 
     @Value("${jwt.expiration}")
-    private long expiration; // ms 단위 (예: 86400000 = 24시간)
+    private long expiration;
 
     private Key getKey() {
         return Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-    // 토큰 생성
     public String generateToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
@@ -30,7 +29,6 @@ public class JwtUtil {
                 .compact();
     }
 
-    // 토큰에서 username 추출
     public String getUsername(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getKey())
@@ -40,7 +38,6 @@ public class JwtUtil {
                 .getSubject();
     }
 
-    // 토큰 유효성 검증
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(getKey()).build().parseClaimsJws(token);
@@ -48,5 +45,9 @@ public class JwtUtil {
         } catch (JwtException | IllegalArgumentException e) {
             return false;
         }
+    }
+
+    public String getUsernameFromToken(String token) {
+        return getUsername(token);
     }
 }

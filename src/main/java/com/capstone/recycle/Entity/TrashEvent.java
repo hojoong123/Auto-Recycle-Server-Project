@@ -40,6 +40,10 @@ public class TrashEvent {
     @Builder.Default
     private String eventType = "CLASSIFY"; // CLASSIFY / RESET
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "performed_by_admin_id")
+    private Admin performedBy;
+
     @Column(name = "defect_reason")
     private String defectReason;
 

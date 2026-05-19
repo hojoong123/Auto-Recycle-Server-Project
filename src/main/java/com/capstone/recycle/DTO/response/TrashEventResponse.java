@@ -4,6 +4,7 @@ import com.capstone.recycle.Entity.TrashEvent;
 import lombok.Getter;
 import java.time.LocalDateTime;
 
+
 @Getter
 public class TrashEventResponse {
     private Long id;
@@ -19,6 +20,7 @@ public class TrashEventResponse {
     private LocalDateTime createdAt;
     private String eventType;
     private Long deviceId;
+    private String performedByName;
 
     public TrashEventResponse(TrashEvent event) {
         this.id = event.getId();
@@ -34,5 +36,8 @@ public class TrashEventResponse {
         this.createdAt = event.getCreatedAt();
         this.eventType = event.getEventType();
         this.deviceId = event.getDevice().getId();
+        this.performedByName = event.getPerformedBy() != null
+                ? event.getPerformedBy().getName()
+                : null;
     }
 }
