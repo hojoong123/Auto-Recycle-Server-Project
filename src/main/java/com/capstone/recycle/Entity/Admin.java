@@ -29,6 +29,12 @@ public class Admin {
     @Builder.Default
     private String role = "ADMIN"; // ADMIN / SUPER_ADMIN
 
+    @Column(name = "floor")
+    private Integer floor; // 담당 층 (SUPER_ADMIN 은 null)
+
+    @Column(name = "fcm_token", length = 255)
+    private String fcmToken;
+
     @Column(name = "is_active", nullable = false)
     @Builder.Default
     private Boolean isActive = true;

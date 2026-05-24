@@ -3,7 +3,11 @@ package com.capstone.recycle.Repository;
 import com.capstone.recycle.Entity.Admin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 import java.util.Optional;
+
+
 
 @Repository
 public interface AdminRepository extends JpaRepository<Admin, Long> {
@@ -13,4 +17,7 @@ public interface AdminRepository extends JpaRepository<Admin, Long> {
     boolean existsByUsername(String username);
 
     Optional<Admin> findByUsernameAndIsActiveTrue(String username);
+
+    List<Admin> findByRoleAndFloorAndIsActiveTrue(String role, Integer floor);
+    List<Admin> findByRoleAndIsActiveTrue(String role);
 }

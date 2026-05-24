@@ -21,4 +21,9 @@ public class WebSocketService {
     public void broadcastError(Object errorLogResponse) {
         messagingTemplate.convertAndSend("/topic/errors", errorLogResponse);
     }
+
+    // ✅ 관리자 개인 알림 채널
+    public void broadcastNotification(Long adminId, Object notificationResponse) {
+        messagingTemplate.convertAndSend("/topic/notifications/" + adminId, notificationResponse);
+    }
 }

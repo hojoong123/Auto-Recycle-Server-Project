@@ -270,3 +270,23 @@ ALTER TABLE trash_event
     COMMENT '작업 수행 관리자' AFTER event_type,
   ADD CONSTRAINT fk_event_admin FOREIGN KEY (performed_by_admin_id) REFERENCES admin(id);
 
+-- 1) 받는 사람 미확인 알림 조회가 가장 빈번하므로 인덱스 필수
+ALTER TABLE inspection_notification
+    ADD INDEX idx_receiver_status (receiver_admin_id, status, sent_at DESC);
+
+-- 2) 층별/타입별 통계용
+ALTER TABLE inspection_notification
+    ADD INDEX idx_floor_type (floor, notification_type);
+
+-- 3) 장치 기준 알림 이력 조회용
+ALTER TABLE inspection_notification
+    ADD INDEX idx_device (device_id, sent_at DESC);
+
+ALTER TABLE admin
+    ADD COLUMN floor INT NULL,
+  ADD COLUMN fcm_token VARCHAR(255) NULL;
+
+select * from trash_event;
+select * from admin;
+
+update admin set name="총괄 관리자" where id = 1;
