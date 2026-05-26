@@ -235,6 +235,10 @@ CREATE TABLE inspection_notification (
                                              FOREIGN KEY (receiver_admin_id) REFERENCES admin(id)
 ) COMMENT='점검 완료 알림 및 관리자 커뮤니케이션 테이블';
 
+ALTER TABLE admin
+    ADD COLUMN floor INT NULL,
+  ADD COLUMN fcm_token VARCHAR(255) NULL;
+
 SET @can_id      = (SELECT id FROM trash_type WHERE type_code = 'CAN');
 SET @glass_id    = (SELECT id FROM trash_type WHERE type_code = 'GLASS');
 SET @general_id  = (SELECT id FROM trash_type WHERE type_code = 'GENERAL');
@@ -282,11 +286,15 @@ ALTER TABLE inspection_notification
 ALTER TABLE inspection_notification
     ADD INDEX idx_device (device_id, sent_at DESC);
 
-ALTER TABLE admin
-    ADD COLUMN floor INT NULL,
-  ADD COLUMN fcm_token VARCHAR(255) NULL;
-
 select * from trash_event;
 select * from admin;
 
 update admin set name="총괄 관리자" where id = 1;
+
+UPDATE admin
+SET floor = 1
+WHERE username = 'floor1';
+
+UPDATE admin
+SET floor = 2
+WHERE username = 'floor2';

@@ -31,6 +31,13 @@ public class AdminService {
         adminRepository.save(admin);
 
         String token = jwtUtil.generateToken(admin.getUsername());
-        return new LoginResponse(token, admin.getUsername(), admin.getName(), admin.getRole());
+        return new LoginResponse(
+                token,
+                admin.getId(),         // ✅
+                admin.getUsername(),
+                admin.getName(),
+                admin.getRole(),
+                admin.getFloor()       // ✅
+        );
     }
 }

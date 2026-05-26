@@ -29,16 +29,9 @@ public class SecurityConfig {
                 .cors(cors -> {})
             .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()  // 로그인은 누구나
-                .requestMatchers("/api/events/**").permitAll()   // 라즈베리파이 전용
-                    .requestMatchers("/api/bins/status/**").permitAll()
-                    .requestMatchers("/api/trash-event/**").permitAll()
-                    .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                    .requestMatchers("/api/staff/**").permitAll()
-                    .requestMatchers("/ws/**").permitAll()
-                .anyRequest().authenticated()                 // 나머지는 관리자만
-            )
+                .authorizeHttpRequests(auth -> auth
+                        .anyRequest().permitAll()
+                )
             .addFilterBefore(new JwtFilter(jwtUtil, detailsService),
                     UsernamePasswordAuthenticationFilter.class);
 
