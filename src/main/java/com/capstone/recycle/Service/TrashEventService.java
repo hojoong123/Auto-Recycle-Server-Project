@@ -50,7 +50,7 @@ public class TrashEventService {
 
         // ✅ 분류 이벤트 실시간 브로드캐스트
         TrashEventResponse trashEventResponse = new TrashEventResponse(event);
-        //webSocketService.broadcastTrashEvent(trashEventResponse);
+        webSocketService.broadcastTrashEvent(trashEventResponse);
 
         // 통 적재량 업데이트
         if (request.getFillPercent() != null) {

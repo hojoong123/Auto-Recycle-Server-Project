@@ -1,35 +1,37 @@
 package com.capstone.recycle.controller;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.web.bind.annotation.*;
+import com.capstone.recycle.Service.NotificationService;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
+import lombok.RequiredArgsConstructor;
+
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/staff")
 @RequiredArgsConstructor
 public class StaffCallController {
 
-    private final SimpMessagingTemplate messagingTemplate;
+    private final NotificationService notificationService;
 
     @PostMapping("/call")
-    public void callStaff() {
+    public void callStaff(
 
-        Map<String, Object> data = new HashMap<>();
+            @RequestParam(defaultValue = "UNKNOWN")
+            String deviceId,
 
-        data.put("type", "STAFF_CALL");
-        data.put("message", "직원 호출 발생");
-        data.put("time", LocalDateTime.now());
+            @RequestParam(defaultValue = "직원 호출")
+            String message,
 
-        // WebSocket 실시간 전송
-        messagingTemplate.convertAndSend(
-                "/topic/staff",
-                data
+            @RequestParam(defaultValue = "1")
+            Integer floor
+    ) {
+
+        notificationService.sendStaffCall(
+                deviceId,
+                message,
+                floor
         );
 
-        System.out.println("🚨 직원 호출 발생");
+        System.out.println("직원 호출 전송!");
     }
 }

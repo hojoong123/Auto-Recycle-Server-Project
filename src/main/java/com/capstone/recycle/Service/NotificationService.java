@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -126,5 +127,78 @@ public class NotificationService {
                 .orElseThrow(() -> new IllegalArgumentException("알림을 찾을 수 없습니다."));
         n.setStatus("CONFIRMED");
         n.setConfirmedAt(LocalDateTime.now());
+    }
+    /** 라즈베리파이 → 총괄 관리자에게 직원 호출 */
+    @Transactional
+    public void sendStaffCall(
+
+            String deviceId,
+            String message,
+            Integer floor
+    ) {
+
+        // ==============================
+        // SUPER_ADMIN 조회
+        // ==============================
+        List<Admin> superAdmins =
+                adminRepo.findByRoleAndIsActiveTrue(
+                        "SUPER_ADMIN"
+                );
+
+        // ==============================
+        // 층 관리자 조회
+        // ==============================
+        List<Admin> floorAdmins =
+                adminRepo.findByRoleAndFloorAndIsActiveTrue(
+                        "ADMIN",
+                        floor
+                );
+
+        // ==============================
+        // 합치기
+        // ==============================
+        List<Admin> receivers = new ArrayList<>();
+
+
+        receivers.addAll(superAdmins);
+
+        receivers.addAll(floorAdmins);
+
+        if (receivers.isEmpty()) {
+
+            throw new IllegalStateException(
+                    "수신 가능한 관리자가 없습니다."
+            );
+        }
+
+        String title = floor + "층 직원 호출";
+
+        for (Admin r : receivers) {
+
+            InspectionNotification n =
+                    InspectionNotification.builder()
+
+                            .sender(r)
+                            .receiver(r)
+
+                            .floor(floor)
+
+                            .title(title)
+
+                            .message(message)
+
+                            .notificationType("STAFF_CALL")
+
+                            .status("SENT")
+
+                            .build();
+
+            notiRepo.save(n);
+
+            webSocketService.broadcastNotification(
+                    r.getId(),
+                    new NotificationResponse(n)
+            );
+        }
     }
 }
